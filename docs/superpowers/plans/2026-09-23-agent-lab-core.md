@@ -70,7 +70,7 @@ The subprocess boundary accepts a command and arguments without a shell.
 - [x] Implement doctor/self-check/run/report CLI and argument validation.
 - [x] Run all tests, offline self-check, then one live pair with the existing login.
 - [x] Inspect the publishable file list for raw runs, credentials and local paths.
-- [ ] Commit verified English source and documentation; publish the scoped repo.
+- [x] Commit verified English source and documentation; publish the scoped repo.
 
 ## Verification record
 
@@ -83,6 +83,8 @@ Both live pilot attempts encountered a local tool-execution policy denial before
 reading the task. They are classified as `execution_blocked`, not graded failures.
 Their original manifests and traces are retained locally; a valid live comparison
 remains unverified. No permissions were changed to bypass this denial.
+
+Published source: https://github.com/Rumbeus/agent-lab
 
 Representative commands:
 
