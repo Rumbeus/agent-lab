@@ -1,0 +1,14 @@
+{
+  "name": "agent-lab-local",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local, reproducible skill experiments with independent verification.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "bin": { "agent-lab": "bin/agent-lab.mjs" },
+  "scripts": {
+    "test": "node --test tests/verify.test.mjs tests/trace.test.mjs tests/report.test.mjs tests/runner.test.mjs tests/cli.test.mjs",
+    "self-check": "node bin/agent-lab.mjs self-check"
+  },
+  "license": "MIT"
+}
