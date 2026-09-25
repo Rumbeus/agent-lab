@@ -1,6 +1,7 @@
 // Executable test double. Real workspaces and the real verifier are still used.
 import { copyFile, readFile, writeFile } from 'node:fs/promises';
 const [mode, oracle] = process.argv.slice(2);
+await writeFile('invocation.json',JSON.stringify(process.argv.slice(4)));
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
 if (mode === 'timeout') { setInterval(() => {},1000); }

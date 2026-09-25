@@ -4,10 +4,12 @@ A small local tool for comparing a coding agent with and without an additional
 debugging skill. It saves the code, execution trace, independent check results,
 elapsed time, and reported token usage for each attempt.
 
-**Status: experimental core.** Offline checks and runner integration tests work.
-The first live pilot on the development host was blocked by local tool-execution
-policy before the agent could read the task. There is no valid live comparison
-result yet. A successful process exit alone is never counted as a successful fix.
+**Status: experimental core with a completed live pilot.** Both attempts in the
+[first completed pair](examples/2026-09-25-duplicate-events/README.md) passed all
+seven independent checks. The pair does not establish a skill advantage: it is
+one task, one attempt per condition, and both agents also read inherited skills.
+The exported implementations can be checked offline. Earlier attempts blocked by
+Windows sandbox configuration remain recorded separately in the case study.
 
 No website is needed to run the experiment. Results are local JSON and Markdown
 files that a future interface can read.
@@ -21,12 +23,14 @@ git clone https://github.com/Rumbeus/agent-lab.git
 cd agent-lab
 npm test
 node bin/agent-lab.mjs self-check
+node examples/2026-09-25-duplicate-events/verify.mjs
 ```
 
 These commands are offline and do not need a Codex login or API key. The bundled
 broken implementation should pass **3 of 7** checks; the reference repair should
 pass **7 of 7**. This validates the task and verifier, not the ability of a model
-to repair it.
+to repair it. The last command independently verifies the two implementations
+captured from the completed live pilot; it does not call a model.
 
 ## Run a live pair
 
@@ -49,10 +53,20 @@ existing Codex authentication and consume its usage allowance or configured API
 usage. Agent Lab does not estimate monetary charges. A timeout is a time limit,
 not a spending limit. Choose an effort supported by your model.
 
-The adapter was exercised with Codex CLI `0.155.0-alpha.9.2`. CLI options and event
+The adapter was exercised with Codex CLI `0.155.0-alpha.16.4`. CLI options and event
 formats can change. The `doctor` command checks availability and login; it does
 not prove that the environment will permit the agent's tools. If execution is
 blocked, the run is recorded as `execution_blocked`, without a task-quality score.
+
+On native Windows, configure Codex's
+[elevated sandbox](https://learn.chatgpt.com/docs/windows/windows-sandbox) before
+running a live experiment. Agent Lab explicitly selects that native sandbox for
+each Windows child, alongside `workspace-write`. This is necessary because
+`--ignore-user-config` otherwise omits the host's Windows sandbox setting. The
+selection is recorded in the experiment settings; Linux and macOS do not receive
+the Windows option. Agent Lab does not edit your global configuration or disable
+execution-policy rules. If sandbox setup is unavailable, resolve it in Codex
+before running experiments.
 
 All commands and options are listed with:
 

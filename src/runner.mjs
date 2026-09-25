@@ -54,7 +54,8 @@ export async function runExperiment({outputDir,model,reasoning='medium',repeats=
   const taskHash = sha(JSON.stringify(await Promise.all(files.map(async name => [name,await readFile(path.join(taskRoot,name),'utf8')]))));
   const settings = {model,reasoning,timeoutMs,nodeVersion:process.version,
     codexVersion:setup.codexVersion,sandbox:'workspace-write',ignoreUserConfig:true,
-    sharedInstructionsHash:sha(sharedInstructions),adapterVersion:2};
+    windowsSandbox:process.platform === 'win32' ? 'elevated':null,
+    sharedInstructionsHash:sha(sharedInstructions),adapterVersion:3};
   const settingsHash = sha(JSON.stringify(settings));
   const experiment = {schemaVersion:1,kind:testAdapter ? 'test-double':'live',
     taskId:'duplicate-events',createdAt:isoNow(),complete:false,taskHash,skillHash:sha(skill),
@@ -88,9 +89,11 @@ export async function runExperiment({outputDir,model,reasoning='medium',repeats=
     onProgress(`${attempt.id}: starting`);
     const args = ['exec','--json','--ephemeral','--color','never','--sandbox','workspace-write',
       '--ignore-user-config','--skip-git-repo-check','--model',model,
-      '-c',`model_reasoning_effort=${JSON.stringify(reasoning)}`,'-C',workspace,'-'];
+      '-c',`model_reasoning_effort=${JSON.stringify(reasoning)}`,
+      ...(settings.windowsSandbox ? ['-c',`windows.sandbox=${JSON.stringify(settings.windowsSandbox)}`]:[]),
+      '-C',workspace,'-'];
     const result = await runProcess(testAdapter?.command ?? codexPath,
-      testAdapter ? testAdapter.args:args,{cwd:workspace,input:prompt,timeoutMs,signal});
+      testAdapter ? [...testAdapter.args,...args]:args,{cwd:workspace,input:prompt,timeoutMs,signal});
     await writeFile(path.join(attemptDir,'trace.jsonl'),result.stdout);
     await writeFile(path.join(attemptDir,'stderr.log'),result.stderr);
     attempt.durationMs = result.durationMs;

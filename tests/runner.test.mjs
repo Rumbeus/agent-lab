@@ -54,6 +54,18 @@ test('fresh attempts are graded independently even when the agent replaces its o
   assert.equal(result.complete,true);
   const saved = JSON.parse(await readFile(path.join(opts.outputDir,'experiment.json'),'utf8'));
   assert.equal(saved.attempts.length,4);
+  const args = JSON.parse(await readFile(path.join(opts.outputDir,'attempts/01-baseline/workspace/invocation.json'),'utf8'));
+  assert.equal(args[0],'exec');
+  assert.equal(args[args.indexOf('--sandbox')+1],'workspace-write');
+  assert.ok(args.includes('--ignore-user-config'));
+  assert.ok(!args.some(arg => /bypass|ignore-rules|danger-full-access/.test(arg)));
+  if (process.platform === 'win32') {
+    assert.ok(args.includes('windows.sandbox="elevated"'),'The isolated Windows child must select its native sandbox explicitly.');
+    assert.equal(saved.settings.windowsSandbox,'elevated');
+  } else {
+    assert.ok(!args.some(arg => arg.startsWith('windows.sandbox=')));
+    assert.equal(saved.settings.windowsSandbox,null);
+  }
   const ignored = await runProcess('git',['check-ignore','--no-index','--','run/experiment.json','run/attempts/01-baseline/prompt.txt'],{cwd:path.dirname(opts.outputDir)});
   assert.deepEqual(ignored.stdout.trim().split(/\r?\n/),['run/experiment.json','run/attempts/01-baseline/prompt.txt']);
   await assert.rejects(runExperiment(opts),/exist/i);

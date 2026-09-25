@@ -24,3 +24,4 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: node bin/agent-lab.mjs self-check
+      - run: node examples/2026-09-25-duplicate-events/verify.mjs

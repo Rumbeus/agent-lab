@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "kind": "live",
+  "taskId": "duplicate-events",
+  "createdAt": "2026-09-25T13:26:39.771Z",
+  "finishedAt": "2026-09-25T13:30:11.976Z",
+  "complete": true,
+  "taskHash": "eda9afe420e1a1d6eaa3ced65a3a7a597399dae79a6c7310128144122f7e928e",
+  "skillHash": "a9d06cbea9889b8ebc4666f41f568bd0af4060e66daacaefbc43656163ff55e1",
+  "settings": {
+    "model": "gpt-6-astra",
+    "reasoning": "medium",
+    "timeoutMs": 180000,
+    "nodeVersion": "v22.22.2",
+    "codexVersion": "codex-cli 0.155.0-alpha.16.4",
+    "sandbox": "workspace-write",
+    "ignoreUserConfig": true,
+    "windowsSandbox": "elevated",
+    "sharedInstructionsHash": "632d6c702a9420def940d7b4bf21484e82a5c92bef007ea276a955980bd1162b",
+    "adapterVersion": 3
+  },
+  "settingsHash": "dea8d36b7d8e05ea702df514c0098a7e6a6e17ac54b71d4eb965f3b528425ebc",
+  "attempts": [
+    {
+      "id": "01-baseline",
+      "repeat": 1,
+      "condition": "baseline",
+      "status": "passed",
+      "taskHash": "eda9afe420e1a1d6eaa3ced65a3a7a597399dae79a6c7310128144122f7e928e",
+      "settingsHash": "dea8d36b7d8e05ea702df514c0098a7e6a6e17ac54b71d4eb965f3b528425ebc",
+      "durationMs": 105317,
+      "verification": {
+        "status": "passed",
+        "passed": 7,
+        "total": 7,
+        "checks": [
+          {
+            "name": "sequential duplicates and delivery contract",
+            "passed": true
+          },
+          {
+            "name": "different tenants are independent",
+            "passed": true
+          },
+          {
+            "name": "different event IDs and delimiter boundaries",
+            "passed": true
+          },
+          {
+            "name": "failed delivery is retryable",
+            "passed": true
+          },
+          {
+            "name": "concurrent duplicate waits for successful delivery",
+            "passed": true
+          },
+          {
+            "name": "concurrent callers share failure and can retry",
+            "passed": true
+          },
+          {
+            "name": "instances are independent and inputs remain intact",
+            "passed": true
+          }
+        ]
+      },
+      "trace": {
+        "completed": true,
+        "failed": false,
+        "usage": {
+          "inputTokens": 154608,
+          "cachedInputTokens": 127744,
+          "outputTokens": 2126
+        },
+        "commands": 6,
+        "commandFailures": 1,
+        "malformedLines": 0,
+        "skillReadObserved": false
+      },
+      "startedAt": "2026-09-25T13:26:39.782Z",
+      "finishedAt": "2026-09-25T13:28:25.104Z",
+      "exitCode": 0,
+      "candidateHash": "6282e2f478757a3fe7f1dd01926cc52165f721498255e80d0a53227d5b47fbd4"
+    },
+    {
+      "id": "02-with-skill",
+      "repeat": 1,
+      "condition": "with-skill",
+      "status": "passed",
+      "taskHash": "eda9afe420e1a1d6eaa3ced65a3a7a597399dae79a6c7310128144122f7e928e",
+      "settingsHash": "dea8d36b7d8e05ea702df514c0098a7e6a6e17ac54b71d4eb965f3b528425ebc",
+      "durationMs": 106594,
+      "verification": {
+        "status": "passed",
+        "passed": 7,
+        "total": 7,
+        "checks": [
+          {
+            "name": "sequential duplicates and delivery contract",
+            "passed": true
+          },
+          {
+            "name": "different tenants are independent",
+            "passed": true
+          },
+          {
+            "name": "different event IDs and delimiter boundaries",
+            "passed": true
+          },
+          {
+            "name": "failed delivery is retryable",
+            "passed": true
+          },
+          {
+            "name": "concurrent duplicate waits for successful delivery",
+            "passed": true
+          },
+          {
+            "name": "concurrent callers share failure and can retry",
+            "passed": true
+          },
+          {
+            "name": "instances are independent and inputs remain intact",
+            "passed": true
+          }
+        ]
+      },
+      "trace": {
+        "completed": true,
+        "failed": false,
+        "usage": {
+          "inputTokens": 159191,
+          "cachedInputTokens": 135680,
+          "outputTokens": 2397
+        },
+        "commands": 8,
+        "commandFailures": 2,
+        "malformedLines": 0,
+        "skillReadObserved": false
+      },
+      "startedAt": "2026-09-25T13:28:25.250Z",
+      "finishedAt": "2026-09-25T13:30:11.848Z",
+      "exitCode": 0,
+      "candidateHash": "a50df4ab2df9529c185dff69bb0b825dc2d3ab85662dde3847b496f50a08fe67"
+    }
+  ],
+  "publication": {
+    "description": "Inspected local live-pilot export. Raw traces, local paths and inherited instructions are omitted. Candidate source hashes refer to original snapshots; published hashes use LF-normalized text.",
+    "snapshots": [
+      {
+        "condition": "baseline",
+        "file": "baseline.mjs",
+        "sha256Lf": "6282e2f478757a3fe7f1dd01926cc52165f721498255e80d0a53227d5b47fbd4"
+      },
+      {
+        "condition": "with-skill",
+        "file": "with-skill.mjs",
+        "sha256Lf": "a50df4ab2df9529c185dff69bb0b825dc2d3ab85662dde3847b496f50a08fe67"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "method": "Manual inspection of retained command events; no agent self-report was used.",
+  "baselineInheritedSkills": [
+    "using-superpowers",
+    "systematic-debugging",
+    "test-driven-development",
+    "verification-before-completion"
+  ],
+  "withSkillInheritedSkills": [
+    "using-superpowers",
+    "systematic-debugging",
+    "test-driven-development",
+    "verification-before-completion"
+  ],
+  "experimentalSkill": {
+    "contentObserved": true,
+    "containingCommandExitCode": 1,
+    "automatedHeuristic": false,
+    "explanation": "The compound read/list command printed the complete experimental skill. Its overall exit code was 1, so the success-only command heuristic did not mark it observed.",
+    "exactOutputExcerpt": "---\nname: debugging\ndescription: Investigate a reported defect, reproduce the failing behavior, and verify a focused repair against the stated contract.\n---\n\n# Debugging experiment v1\n\nBefore editing, reproduce a contract violation with a focused test. Distinguish\nthe visible symptom from the state transition that caused it.\n\nFor asynchronous stateful code, trace when state is published, which callers\nshare it, and what happens on rejection. Inspect identity boundaries as well as\nthe happy path. Use the task's contract rather than adding unrelated behavior.\n\nMake a focused repair. Run the reproducer and relevant regression tests after\nthe edit. Report the commands actually executed and any remaining limitations."
+  },
+  "limitations": [
+    "Reading a skill does not prove following it.",
+    "Both attempts also read inherited debugging and testing skills.",
+    "Raw traces remain local; timing and usage cannot be independently audited from this export alone."
+  ]
+}
